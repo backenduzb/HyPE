@@ -1,0 +1,11 @@
+{
+  "custom/active_app": {
+    "exec": "~/.config/waybar/scripts/active_app.sh",
+    "interval": 1,
+    "format": "{}"
+  },
+  "custom/arch_icon": {
+    "format": "󰣇",
+    "on-click": "~/.config/waybar/scripts/powermenu.sh"
+  }
+}

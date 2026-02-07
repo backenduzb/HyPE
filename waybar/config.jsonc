@@ -1,0 +1,21 @@
+{
+  "margin-top": 5,
+  "margin-left": 8,
+  "margin-right": 8,
+  "height": 32,
+  "include": [
+    "modules/wifi.jsonc",
+    "modules/battery.jsonc",
+    "modules/labels.jsonc",
+    "modules/time.jsonc"
+  ],
+  "modules-left": [
+    "custom/arch_icon",
+    "custom/active_app"
+  ],
+  "modules-right": [
+    "tray",
+    "battery",
+    "clock"
+  ]
+}

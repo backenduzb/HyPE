@@ -1,0 +1,55 @@
+@import "./theme/colors.css";
+
+* {
+    font-family: "SF Pro Display",  Symbols Nerd Font;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 16px;
+}
+
+window#waybar {
+    margin: 8px 12px;
+    border-radius: 12px;
+    padding: 2px;
+    color: white;
+    background: @bg;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #888;
+}
+
+#workspaces button.active {
+    color: #00ff99;
+}
+
+#custom-labels {
+    color: white;
+}
+#tray,
+#battery,
+#clock{
+    margin-left: 10px;
+    margin-right: 10px;       
+}
+#custom-active_app{
+    margin-left: 3px;
+    margin-right: 3px;       
+}
+#clock{
+    margin-right: 10px;
+}
+#custom-arch_icon{
+    font-size: 25px;
+    margin: 0 15px; 
+}
+
+#tray {
+  padding: 0 8px;
+}
+
+#tray image {
+  -gtk-icon-transform: scale(1.2);
+  opacity: 1;
+}
