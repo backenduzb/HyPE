@@ -1,0 +1,53 @@
+* {
+    font-family: "SF Pro Text";
+    font-size: 12px;
+    border: none;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #ffffff;
+    border-radius: 14px;
+}
+
+#workspaces,
+#clock,
+#network,
+#pulseaudio,
+#battery,
+#tray {
+    padding: 0 12px;
+    margin: 5px 3px;
+    border-radius: 10px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: #858b9c;
+    background: transparent;
+    border-radius: 8px;
+}
+
+#workspaces button.active {
+    color: #ffffff;
+    background: transparent;
+}
+
+#clock {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#pulseaudio,
+#network,
+#battery {
+    color: #ffffff;
+}
+
+tooltip {
+    background: rgba(28, 30, 38, 0.96);
+    color: #ffffff;
+    border: 1px solid #454b5b;
+    border-radius: 10px;
+}

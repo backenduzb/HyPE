@@ -1,0 +1,75 @@
+configuration {
+    modes: "drun";
+    show-icons: true;
+    icon-theme: "WhiteSur-dark";
+    disable-history: false;
+    sorting-method: "fzf";
+    drun-use-desktop-cache: true;
+    drun-reload-desktop-cache: true;
+}
+
+* {
+    background-color: transparent;
+    text-color: #f5f5f5;
+    normal-background: transparent;
+    alternate-normal-background: transparent;
+}
+
+window {
+    location: south;
+    anchor: south;
+    x-offset: 0px;
+    y-offset: -16px;
+
+    width: 553px;
+    height: 70px;
+    border-radius: 18px;
+    background-color: transparent;
+    border: 1px;
+    border-color: #353535;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ listview ];
+    spacing: 8px;
+}
+
+listview {
+    layout: horizontal;
+    spacing: 4px;
+    lines: 9;
+    columns: 1;
+    fixed-height: true;
+    fixed-columns: true;
+    scrollbar: false;
+    border: 0px;
+}
+
+element {
+    padding: 2px 2px;
+    background-color: transparent;
+    border-radius: 10px;
+    children: [ element-icon ];
+    spacing: 10px;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: #353535;
+}
+
+element-icon {
+    background-color: transparent;
+    cursor: pointer;
+    size: 52px;
+}
+
+element-text {
+    enabled: false;
+}

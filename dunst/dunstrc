@@ -1,0 +1,49 @@
+
+[global]
+    monitor = 0
+    follow = mouse
+    width = (300, 420)
+    height = 280
+    origin = top-right
+    offset = 14x48
+
+    notification_limit = 5
+    progress_bar = true
+    indicate_hidden = yes
+
+    transparency = 8
+    frame_width = 1
+    corner_radius = 12
+
+    font = JetBrainsMono Nerd Font 10
+    format = "<b>%s</b>\n%b"
+    markup = full
+
+    background = "#17191f"
+    foreground = "#e8eaf0"
+    frame_color = "#8b9dff"
+
+    padding = 12
+    horizontal_padding = 14
+    gap_size = 8
+
+    sort = yes
+    idle_threshold = 120
+
+[urgency_low]
+    background = "#20232b"
+    foreground = "#c5c9d4"
+    frame_color = "#454b5b"
+    timeout = 4
+
+[urgency_normal]
+    background = "#20232b"
+    foreground = "#e8eaf0"
+    frame_color = "#8b9dff"
+    timeout = 6
+
+[urgency_critical]
+    background = "#321f28"
+    foreground = "#fff0f2"
+    frame_color = "#ff8295"
+    timeout = 0
