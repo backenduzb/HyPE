@@ -24,16 +24,12 @@ end
 
 hl.layer_rule({
     match = { namespace = "waybar" },
-    blur = false,
+    blur = true,
     xray = false,
 })
 hl.layer_rule({
     match = { namespace = "rofi" },
     blur = false,
     xray = false,
-})
-
-hl.layer_rule({
-    match = { namespace = "rofi" },
-    animation = "slide bottom",
+    animation = "popin 96%",
 })

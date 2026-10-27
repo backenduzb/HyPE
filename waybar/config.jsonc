@@ -1,62 +1,116 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 38,
-  "spacing": 8,
+  "height": 30,
+  "spacing": 0,
 
   "modules-left": [
-    "",
+    "custom/arch",
     "hyprland/workspaces"
   ],
 
   "modules-center": [
-    "clock"
+    "group/hardware"
   ],
 
   "modules-right": [
-    "network",
+    "tray",
+    "bluetooth",
     "pulseaudio",
     "battery",
-    "tray"
+    "clock"
   ],
+
+  "custom/arch": {
+    "format": "󰣇",
+    "tooltip": false,
+    "on-click": "sh -c $HOME/.config/rofi/scripts/toggle.sh full"
+  },
 
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "active": "●",
-      "default": "○"
+      "active": "󰮯",
+      "default": "󰊠",
+      "empty": "󰑊"
     },
     "persistent-workspaces": {
       "*": 5
     }
   },
 
-  "clock": {
-    "format": "{:%H:%M}",
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": [
+      "cpu",
+      "memory",
+      "temperature"
+    ]
+  },
+
+  "cpu": {
+    "format": "󰻠 {usage}%",
+    "interval": 2,
     "tooltip": true
   },
 
-  "network": {
-    "format-wifi": "󰤨",
-    "format-ethernet": "󰈀",
-    "format-disconnected": "󰤭",
+  "memory": {
+    "format": "󰍛 {percentage}%",
+    "interval": 2,
     "tooltip": true
+  },
+
+  "temperature": {
+    "critical-threshold": 80,
+    "format": "󰔏 {temperatureC}°C",
+    "tooltip": true
+  },
+
+  "tray": {
+    "icon-size": 15,
+    "spacing": 10
+  },
+
+  "bluetooth": {
+    "format": "󰂯",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱 {device_alias}",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\nConnected devices:\n{device_enumerate}",
+    "on-click": "blueman-manager"
   },
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
-    "format-muted": "󰝟",
+    "format-muted": "󰝟 0%",
     "format-icons": {
       "default": ["󰕿", "󰖀", "󰕾"]
-    }
+    },
+    "tooltip-format": "Volume: {volume}%",
+    "on-click": "pavucontrol"
   },
 
   "battery": {
     "format": "{icon} {capacity}%",
-    "format-icons": ["󰂎", "󰁺", "󰁼", "󰁾", "󰂀"]
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂄 {capacity}%",
+    "format-icons": ["󰂎", "󰁺", "󰁼", "󰁾", "󰂀"],
+    "tooltip-format": "Battery: {capacity}%"
   },
 
-  "tray": {
-    "spacing": 8
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤮",
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "{ifname} ({ipaddr})",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "nm-connection-editor"
   }
 }

@@ -9,11 +9,13 @@ configuration {
     top-level: true;
     steal-focus: true;
 
+    markup-rows: true;
+    highlight: "bold";
+
     kb-remove-to-eol: "";
     kb-element-next: "";
     kb-element-prev: "";
     border-radius: 20px;
-
 
     kb-row-up: "Up,Control+k,ISO_Left_Tab";
     kb-row-down: "Down,Control+j,Tab";
@@ -44,7 +46,7 @@ window {
 mainbox {
     border: 0px;
     orientation: horizontal;
-    children: [ banner, listview ];
+    children: [ banner, contentbox ];
     spacing: 0px;
     background-color: transparent;
 }
@@ -57,6 +59,35 @@ banner {
     background-image: url("/home/vic/Projects/hycon/assets/wallpapers/space.jpg", height);
 }
 
+contentbox {
+    orientation: vertical;
+    children: [ inputbar, listview ];
+    background-color: transparent;
+    padding: 20px;
+    spacing: 0px;
+}
+
+inputbar {
+    width: 0px;
+    height: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    background-color: transparent;
+    children: [ entry ];
+}
+
+entry {
+    width: 0px;
+    height: 0px;
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+    text-color: transparent;
+    placeholder: "";
+    placeholder-color: transparent;
+}
+
 listview {
     layout: vertical;
     lines: 9;
@@ -65,7 +96,6 @@ listview {
     scrollbar: false;
     background-color: transparent;
     dynamic: true;
-    padding: 20px;
     border: 0px;
 }
 
@@ -103,4 +133,5 @@ element-text {
     vertical-align: 0.5;
     text-color: inherit;
     font: "SF Pro Text Mono 10";
+    highlight: bold;
 }

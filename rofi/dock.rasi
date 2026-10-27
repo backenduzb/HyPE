@@ -61,7 +61,7 @@ element alternate.normal {
 
 element selected.normal,
 element selected.active {
-    background-color: #353535;
+    background-color: #acacac90;
 }
 
 element-icon {
