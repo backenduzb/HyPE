@@ -1,116 +1,129 @@
 {
-  "layer": "top",
-  "position": "top",
-  "height": 30,
-  "spacing": 0,
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 0,
 
-  "modules-left": [
-    "custom/arch",
-    "hyprland/workspaces"
-  ],
+    "modules-left": ["custom/arch", "hyprland/workspaces"],
 
-  "modules-center": [
-    "group/hardware"
-  ],
+    "modules-center": ["group/hardware"],
 
-  "modules-right": [
-    "tray",
-    "bluetooth",
-    "pulseaudio",
-    "battery",
-    "clock"
-  ],
+    "modules-right": ["tray", "bluetooth", "pulseaudio", "battery", "clock"],
 
-  "custom/arch": {
-    "format": "󰣇",
-    "tooltip": false,
-    "on-click": "sh -c $HOME/.config/rofi/scripts/toggle.sh full"
-  },
-
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": {
-      "active": "󰮯",
-      "default": "󰊠",
-      "empty": "󰑊"
+    "custom/arch": {
+        "format": "󰣇",
+        "tooltip": true,
+        "tooltip-format": "Power Menu",
+        "on-click": "pkill wlogout || wlogout -b 3",
+        "cursor": true,
     },
-    "persistent-workspaces": {
-      "*": 5
-    }
-  },
 
-  "group/hardware": {
-    "orientation": "horizontal",
-    "modules": [
-      "cpu",
-      "memory",
-      "temperature"
-    ]
-  },
-
-  "cpu": {
-    "format": "󰻠 {usage}%",
-    "interval": 2,
-    "tooltip": true
-  },
-
-  "memory": {
-    "format": "󰍛 {percentage}%",
-    "interval": 2,
-    "tooltip": true
-  },
-
-  "temperature": {
-    "critical-threshold": 80,
-    "format": "󰔏 {temperatureC}°C",
-    "tooltip": true
-  },
-
-  "tray": {
-    "icon-size": 15,
-    "spacing": 10
-  },
-
-  "bluetooth": {
-    "format": "󰂯",
-    "format-disabled": "󰂲",
-    "format-connected": "󰂱 {device_alias}",
-    "tooltip-format": "{controller_alias}\t{controller_address}",
-    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\nConnected devices:\n{device_enumerate}",
-    "on-click": "blueman-manager"
-  },
-
-  "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": "󰝟 0%",
-    "format-icons": {
-      "default": ["󰕿", "󰖀", "󰕾"]
+    "group/hardware": {
+        "orientation": "horizontal",
+        "modules": [
+            "cpu",
+            "memory",
+            "temperature",
+            "custom/gpu-icon",
+            "custom/gpu-temp",
+        ],
     },
-    "tooltip-format": "Volume: {volume}%",
-    "on-click": "pavucontrol"
-  },
 
-  "battery": {
-    "format": "{icon} {capacity}%",
-    "format-charging": "󰂄 {capacity}%",
-    "format-plugged": "󰂄 {capacity}%",
-    "format-icons": ["󰂎", "󰁺", "󰁼", "󰁾", "󰂀"],
-    "tooltip-format": "Battery: {capacity}%"
-  },
+    "cpu": {
+        "format": "󰻠 {usage}%",
+        "interval": 2,
+        "tooltip": true,
+    },
 
-  "clock": {
-    "format": "{:%a %d %b  %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-  },
+    "memory": {
+        "format": "󰍛 {percentage}%",
+        "interval": 2,
+        "tooltip": true,
+    },
 
-  "network": {
-    "format-wifi": "{icon}",
-    "format-ethernet": "󰈀",
-    "format-disconnected": "󰤮",
-    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
-    "tooltip-format-ethernet": "{ifname} ({ipaddr})",
-    "tooltip-format-disconnected": "Disconnected",
-    "on-click": "nm-connection-editor"
-  }
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "󰔏 {temperatureC}°C",
+        "tooltip": true,
+    },
+
+    "custom/gpu-icon": {
+        "exec": "$HOME/.config/waybar/scripts/gpu.sh icon",
+        "return-type": "json",
+        "interval": 3,
+        "signal": 8,
+        "tooltip": true,
+        "cursor": true,
+        "on-click": "$HOME/.config/waybar/scripts/gpu.sh toggle",
+    },
+
+    "custom/gpu-temp": {
+        "exec": "$HOME/.config/waybar/scripts/gpu.sh temp",
+        "return-type": "json",
+        "interval": 3,
+        "signal": 8,
+        "tooltip": true,
+        "cursor": true,
+        "on-click": "$HOME/.config/waybar/scripts/gpu.sh toggle",
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "active": "󰮯",
+            "default": "󰊠",
+            "empty": "󰑊",
+        },
+        "persistent-workspaces": {
+            "*": 5,
+        },
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10,
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-disabled": "󰂲",
+        "format-connected": "󰂱 {device_alias}",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\nConnected devices:\n{device_enumerate}",
+        "on-click": "blueman-manager",
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 0%",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"],
+        },
+        "tooltip-format": "Volume: {volume}%",
+        "on-click": "pavucontrol",
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰂄 {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁼", "󰁾", "󰂀", "󱈑"],
+        "tooltip-format": "Battery: {capacity}%",
+    },
+
+    "clock": {
+        "format": "{:%a %d %b  %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    },
+
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤮",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname} ({ipaddr})",
+        "tooltip-format-disconnected": "Disconnected",
+        "on-click": "nm-connection-editor",
+    },
 }

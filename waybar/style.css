@@ -18,9 +18,11 @@ window#waybar {
     transition: all 0.3s ease;
 }
 
-/* Base module appearance - No inner backgrounds or borders */
 #custom-arch,
 #workspaces,
+#group-hardware,
+#custom-gpu-icon,
+#custom-gpu-temp,
 #cpu,
 #memory,
 #temperature,
@@ -37,11 +39,10 @@ window#waybar {
     padding: 0 9px;
 }
 
-/* Modules Left */
 #custom-arch {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 600;
-    padding: 0 10px 0 14px;
+    padding: 0 20px 0 14px;
     color: #ffffff;
     transition: opacity 0.2s ease;
 }
@@ -73,29 +74,48 @@ window#waybar {
     color: rgba(255, 255, 255, 0.85);
 }
 
-/* Modules Center: Utilization indicators */
 #group-hardware {
     background: transparent;
     border: none;
+    padding: 0 4px;
+    margin-left: 20px;
 }
 
 #cpu,
 #memory,
-#temperature {
+#temperature,
+#custom-gpu-temp {
     color: #ffffff;
     padding: 0 8px;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 0.2px;
     transition: opacity 0.2s ease;
 }
 
+#custom-gpu-icon,
+#custom-gpu-icon label {
+    font-size: 14px;
+    color: #ffffff;
+    padding: 0 3px 0 2px;
+
+    transition: opacity 0.2s ease;
+}
+
+#custom-gpu-temp {
+    font-size: 13px;
+    padding-top: 1px;
+    padding-left: 3px;
+    padding-right: 20px;
+}
+
 #cpu:hover,
 #memory:hover,
-#temperature:hover {
+#temperature:hover,
+#custom-gpu-icon:hover,
+#custom-gpu-temp:hover {
     opacity: 0.75;
 }
 
-/* Modules Right: macOS System Status & Clock */
 #tray {
     padding: 0 6px;
 }
@@ -142,7 +162,6 @@ window#waybar {
     opacity: 0.75;
 }
 
-/* macOS Frosted Glass Tooltip */
 tooltip {
     background: rgba(24, 24, 26, 0.88);
     color: #ffffff;

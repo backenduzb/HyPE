@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+    <menu id="settings">
+        <submenu>
+            <attribute name="label">Wallpaper</attribute>
+            <item>
+                <attribute name="label">Select Wallpaper</attribute>
+                <attribute name="action">menu.select-wallpaper</attribute>
+            </item>
+            <item>
+                <attribute name="label">Next Wallpaper</attribute>
+                <attribute name="action">menu.next-wallpaper</attribute>
+            </item>
+            <item>
+                <attribute name="label">Previous Wallpaper</attribute>
+                <attribute name="action">menu.prev-wallpaper</attribute>
+            </item>
+            <item>
+                <attribute name="label">Random Wallpaper</attribute>
+                <attribute name="action">menu.rand-wallpaper</attribute>
+            </item>
+            </submenu>
+            <submenu>
+                <attribute name="label">Animations</attribute>
+            </submenu>
+            <submenu>
+            <attribute name="label">Theme</attribute>
+            </submenu>
+    </menu>
+</interface>

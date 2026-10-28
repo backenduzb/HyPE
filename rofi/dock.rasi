@@ -1,11 +1,8 @@
 configuration {
-    modes: "drun";
     show-icons: true;
     icon-theme: "WhiteSur-dark";
     disable-history: false;
     sorting-method: "fzf";
-    drun-use-desktop-cache: true;
-    drun-reload-desktop-cache: true;
 }
 
 * {
