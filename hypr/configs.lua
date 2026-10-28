@@ -24,6 +24,10 @@ local configs = {
         toggle = configHome .. "/rofi/scripts/toggle.sh"
     },
 
+    hypridle = {
+        config = configHome .. "/hypridle/hypridle.conf"
+    },
+
     wallpapres = {
         space = configHome .. "/assets/wallpapers/space.jpg"
     }

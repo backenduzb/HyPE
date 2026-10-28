@@ -270,11 +270,24 @@ prepare_debug_home() {
         "$DEBUG_HOME/.cache"
 
     local cfg
-    for cfg in waybar dunst kitty wofi rofi hypr; do
+    for cfg in waybar dunst kitty wofi rofi hypr hypridle; do
         if [[ -e "$PROJECT_DIR/$cfg" ]]; then
             ln -s "$PROJECT_DIR/$cfg" "$DEBUG_HOME/.config/$cfg"
         fi
     done
+
+    if [[ -d "$PROJECT_DIR/vim" ]]; then
+        mkdir -p "$DEBUG_HOME/.vim"
+        local vimfile
+        for vimfile in settings.vim plugins.vim keymaps.vim nerdtree.vim airline.vim theme.vim coc-settings.json; do
+            if [[ -e "$PROJECT_DIR/vim/$vimfile" ]]; then
+                ln -s "$PROJECT_DIR/vim/$vimfile" "$DEBUG_HOME/.vim/$vimfile"
+            fi
+        done
+        [[ -d "$PROJECT_DIR/vim/autoload" ]] && ln -s "$PROJECT_DIR/vim/autoload" "$DEBUG_HOME/.vim/autoload"
+        [[ -d "$HOME/.vim/plugged" ]] && ln -s "$HOME/.vim/plugged" "$DEBUG_HOME/.vim/plugged"
+        [[ -f "$PROJECT_DIR/vim/vimrc" ]] && ln -s "$PROJECT_DIR/vim/vimrc" "$DEBUG_HOME/.vimrc"
+    fi
 }
 
 launch_hyprland() {

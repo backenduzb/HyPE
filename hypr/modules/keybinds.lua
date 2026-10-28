@@ -10,8 +10,13 @@ hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(cfg.rofi.toggle .. " toggle"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("spotify"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind("ALT + Q", hl.dsp.window.close())
+
+hl.bind("CTRL + " .. mainMod .. " + ALT + Left", hl.dsp.window.move({ direction = "left" }))
+hl.bind("CTRL + " .. mainMod .. " + ALT + Right", hl.dsp.window.move({ direction = "right" }))
 
 for i = 1, 9 do
     local key = tostring(i)

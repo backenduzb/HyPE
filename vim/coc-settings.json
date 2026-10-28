@@ -1,0 +1,15 @@
+{
+  "diagnostic.enableSign": false,
+  "diagnostic.virtualText": false,
+  "diagnostic.enableMessage": "never",
+  "diagnostic.messageTarget": "echo",
+  "diagnostic.checkCurrentLine": false,
+  "notification.disabled": true,
+  "notification.statusLineProgress": false,
+  "coc.preferences.messageLevel": "error",
+  "suggest.enablePreview": false,
+  "suggest.noselect": false,
+  "suggest.autoTrigger": "always",
+  "suggest.minTriggerInputLength": 1,
+  "signature.enable": false
+}
