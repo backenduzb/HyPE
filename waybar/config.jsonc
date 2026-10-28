@@ -14,8 +14,8 @@
         "format": "󰣇",
         "tooltip": true,
         "tooltip-format": "Power Menu",
-        "on-click": "pkill wlogout || wlogout -b 3",
-        "cursor": true,
+        "on-click": "pkill wlogout || wlogout -b 3 -l ${HYCON_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}}/wlogout/layout -C ${HYCON_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}}/wlogout/style.css",
+        "cursor": true
     },
 
     "group/hardware": {
