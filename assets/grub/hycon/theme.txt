@@ -1,0 +1,100 @@
+title-text: ""
+desktop-image: "background.png"
+desktop-image-scale-method: "crop"
+desktop-color: "#000000"
+terminal-font: "HyconTerm Regular 18"
+terminal-box: "terminal_*.png"
+terminal-left: "8%"
+terminal-top: "12%"
+terminal-width: "84%"
+terminal-height: "76%"
+terminal-border: "1"
+
++ image {
+  file = "hud_top.png"
+  left = 0
+  top = 0
+  width = 1920
+  height = 2
+}
+
++ image {
+  file = "hud_bottom.png"
+  left = 0
+  top = 100%-2
+  width = 1920
+  height = 2
+}
+
++ label {
+  left = 6%
+  top = 5%
+  width = 44%
+  align = "left"
+  text = "HYCON"
+  font = "HyconTitle Regular 48"
+  color = "#ffffff"
+}
+
++ label {
+  left = 6%
+  top = 13%
+  width = 44%
+  align = "left"
+  text = "BOOT PROTOCOL // SELECT ENTRY"
+  font = "HyconSmall Regular 16"
+  color = "#9a9a9a"
+}
+
++ label {
+  left = 56%
+  top = 5%
+  width = 38%
+  align = "right"
+  text = "MONOCHROME // 01"
+  font = "HyconSmall Regular 16"
+  color = "#8a8a8a"
+}
+
++ boot_menu {
+  left = 52%
+  top = 24%
+  width = 42%
+  height = 56%
+  item_font = "HyconMenu Regular 22"
+  selected_item_font = "HyconMenu Regular 22"
+  item_color = "#b8b8b8"
+  selected_item_color = "#ffffff"
+  icon_width = 28
+  icon_height = 28
+  item_icon_space = 14
+  item_height = 52
+  item_padding = 10
+  item_spacing = 8
+  menu_pixmap_style = "menu_*.png"
+  selected_item_pixmap_style = "select_*.png"
+  scrollbar = true
+  scrollbar_width = 6
+  scrollbar_thumb = "slider_*.png"
+}
+
++ label {
+  left = 52%
+  top = 84%
+  width = 42%
+  align = "right"
+  id = "__timeout__"
+  text = "AUTO BOOT IN %d"
+  font = "HyconSmall Regular 16"
+  color = "#9a9a9a"
+}
+
++ label {
+  left = 6%
+  top = 92%
+  width = 44%
+  align = "left"
+  text = "HYCON // ARCH LINUX"
+  font = "HyconSmall Regular 16"
+  color = "#6f6f6f"
+}

@@ -1,7 +1,3 @@
-" ==============================================================================
-" Minimal Modern Statusline (UDark Style)
-" Zero-bloat, lightning fast, notification-free
-" ==============================================================================
 
 set laststatus=2
 

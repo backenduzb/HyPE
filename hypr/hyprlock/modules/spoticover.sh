@@ -20,13 +20,11 @@ while IFS= read -r p; do
     fi
 done < <($PLAYERCTL -l 2>/dev/null)
 
-# Player topilmasa -> fallback
 if [[ -z "$PLAYER" ]]; then
     cp "$FALLBACK" "$ART_FILE"
     exit 0
 fi
 
-# Album art URL
 URL=$($PLAYERCTL -p "$PLAYER" metadata mpris:artUrl 2>/dev/null)
 
 if [[ -z "$URL" ]]; then

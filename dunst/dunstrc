@@ -1,49 +1,72 @@
-
 [global]
     monitor = 0
-    follow = mouse
-    width = (300, 420)
-    height = 280
+    follow = none
+
+    width = (0, 280)
+    height = (0, 200)
     origin = top-right
-    offset = 14x48
+    offset = (16, 44)
+    scale = 0
+    notification_limit = 4
 
-    notification_limit = 5
     progress_bar = true
-    indicate_hidden = yes
+    progress_bar_height = 3
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 80
+    progress_bar_max_width = 240
+    progress_bar_corner_radius = 1
 
-    transparency = 8
+    corner_radius = 10
+    corners = all
+    padding = 10
+    horizontal_padding = 12
+    text_icon_padding = 10
     frame_width = 1
-    corner_radius = 12
+    gap_size = 6
+    separator_height = 0
 
-    font = JetBrainsMono Nerd Font 10
-    format = "<b>%s</b>\n%b"
     markup = full
+    font = JetBrains Mono 8.5
+    line_height = 2
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    show_age_threshold = -1
+    ellipsize = end
+    word_wrap = true
 
-    background = "#17191f"
-    foreground = "#e8eaf0"
-    frame_color = "#8b9dff"
+    enable_recursive_icon_lookup = true
+    icon_position = left
+    min_icon_size = 24
+    max_icon_size = 36
+    icon_corner_radius = 6
 
-    padding = 12
-    horizontal_padding = 14
-    gap_size = 8
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
 
-    sort = yes
-    idle_threshold = 120
+    stack_duplicates = true
+    hide_duplicate_count = true
+    show_indicators = no
+    sort = urgency_descending
 
 [urgency_low]
-    background = "#20232b"
-    foreground = "#c5c9d4"
-    frame_color = "#454b5b"
+    background = "#111111CC"
+    foreground = "#888888"
+    frame_color = "#2A2A2A"
+    highlight = "#CCCCCC"
     timeout = 4
 
 [urgency_normal]
-    background = "#20232b"
-    foreground = "#e8eaf0"
-    frame_color = "#8b9dff"
+    background = "#0D0D0DE6"
+    foreground = "#E8E8E8"
+    frame_color = "#383838"
+    highlight = "#FFFFFF"
     timeout = 6
 
 [urgency_critical]
-    background = "#321f28"
-    foreground = "#fff0f2"
-    frame_color = "#ff8295"
+    background = "#000000F5"
+    foreground = "#FFFFFF"
+    frame_color = "#FFFFFF"
+    highlight = "#FFFFFF"
     timeout = 0

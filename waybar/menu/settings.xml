@@ -19,12 +19,28 @@
                 <attribute name="label">Random Wallpaper</attribute>
                 <attribute name="action">menu.rand-wallpaper</attribute>
             </item>
-            </submenu>
-            <submenu>
-                <attribute name="label">Animations</attribute>
-            </submenu>
-            <submenu>
+        </submenu>
+        <submenu>
+            <attribute name="label">Animations</attribute>
+            <item>
+                <attribute name="label">Enabled</attribute>
+                <attribute name="action">animations.enable</attribute>
+            </item>
+            <item>
+                <attribute name="label">Disabled</attribute>
+                <attribute name="action">animations.disable</attribute>
+            </item>
+        </submenu>
+        <submenu>
             <attribute name="label">Theme</attribute>
-            </submenu>
+            <item>
+                <attribute name="label">macOS Dark</attribute>
+                <attribute name="action">theme.set-dark</attribute>
+            </item>
+            <item>
+                <attribute name="label">macOS Light</attribute>
+                <attribute name="action">theme.set-light</attribute>
+            </item>
+        </submenu>
     </menu>
 </interface>

@@ -1,0 +1,95 @@
+@import "colors.rasi"
+
+configuration {
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+    kb-remove-to-eol: "";
+    kb-element-next: "";
+    kb-element-prev: "";
+    kb-row-up: "Up,Control+k,ISO_Left_Tab";
+    kb-row-down: "Down,Control+j,Tab";
+    kb-accept-entry: "Return,KP_Enter";
+}
+
+* {
+    font: "SF Pro Text 10";
+    background-color: transparent;
+    text-color: @mac-text;
+    margin: 0px;
+    padding: 0px;
+    spacing: 0px;
+}
+
+window {
+    location: center;
+    anchor: center;
+    width: 620px;
+    border-radius: 16px;
+    background-color: @mac-bg-translucent;
+    border: 0px;
+    padding: 12px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing: 8px;
+    background-color: transparent;
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    spacing: 8px;
+    padding: 6px 10px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: @mac-entry-bg;
+    font: "SF Pro Text 10";
+}
+
+prompt {
+    text-color: @mac-text-dim;
+}
+
+entry {
+    text-color: @mac-text;
+    placeholder: "Search emoji";
+    placeholder-color: @mac-text-muted;
+    font: "SF Pro Text 10";
+}
+
+listview {
+    lines: 10;
+    columns: 1;
+    spacing: 6px;
+    dynamic: true;
+    fixed-height: true;
+    scrollbar: false;
+    border: 0px;
+    background-color: transparent;
+}
+
+element {
+    padding: 8px 12px;
+    border-radius: 8px;
+    children: [ element-text ];
+    background-color: transparent;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+    text-color: @mac-text-dim;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: @mac-surface-hover;
+    text-color: @mac-text;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color: inherit;
+    font: "Noto Color Emoji 10";
+}

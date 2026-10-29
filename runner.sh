@@ -270,7 +270,7 @@ prepare_debug_home() {
         "$DEBUG_HOME/.cache"
 
     local cfg
-    for cfg in waybar dunst kitty wofi rofi hypr hypridle; do
+    for cfg in waybar dunst kitty wofi rofi hypr hypridle themes assets gtk-3.0 gtk-4.0 qt5ct qt6ct Kvantum; do
         if [[ -e "$PROJECT_DIR/$cfg" ]]; then
             ln -s "$PROJECT_DIR/$cfg" "$DEBUG_HOME/.config/$cfg"
         fi

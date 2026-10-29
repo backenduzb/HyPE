@@ -1,0 +1,103 @@
+@import "colors.rasi"
+@import "icon-theme.rasi"
+
+configuration {
+    show-icons: true;
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+
+    kb-remove-to-eol: "";
+    kb-element-next: "";
+    kb-element-prev: "";
+
+    kb-row-up: "Up,Control+k,ISO_Left_Tab";
+    kb-row-down: "Down,Control+j,Tab";
+    kb-accept-entry: "Return,KP_Enter";
+}
+
+* {
+    font: "SF Pro Text 10";
+    background-color: transparent;
+    text-color: @mac-text;
+    margin: 0px;
+    padding: 0px;
+    spacing: 0px;
+}
+
+window {
+    location: center;
+    anchor: center;
+    width: 900px;
+    height: 300px;
+    border-radius: 20px;
+    background-color: @mac-bg-translucent;
+    border: 1px;
+    border-color: @mac-border;
+    padding: 14px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing: 10px;
+    background-color: transparent;
+}
+
+inputbar {
+    children: [ prompt ];
+    padding: 0px 6px;
+    background-color: transparent;
+}
+
+prompt {
+    text-color: @mac-text-dim;
+}
+
+entry {
+    enabled: false;
+}
+
+listview {
+    layout: horizontal;
+    lines: 100;
+    columns: 1;
+    spacing: 12px;
+    dynamic: true;
+    fixed-height: true;
+    scrollbar: false;
+    background-color: transparent;
+}
+
+element {
+    orientation: vertical;
+    padding: 8px;
+    border-radius: 14px;
+    spacing: 6px;
+    background-color: transparent;
+    children: [ element-icon, element-text ];
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+    text-color: @mac-text-dim;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: @mac-surface-hover;
+    text-color: @mac-text;
+}
+
+element-icon {
+    size: 160px;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    text-color: inherit;
+    font: "SF Pro Text 9";
+}

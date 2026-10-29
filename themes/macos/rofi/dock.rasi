@@ -1,0 +1,79 @@
+@import "colors.rasi"
+@import "icon-theme.rasi"
+
+configuration {
+    show-icons: true;
+    disable-history: false;
+    sorting-method: "fzf";
+
+    kb-remove-to-eol: "";
+    kb-element-next: "";
+    kb-element-prev: "";
+}
+
+* {
+    background-color: transparent;
+    text-color: @mac-text;
+    normal-background: transparent;
+    alternate-normal-background: transparent;
+}
+
+window {
+    location: south;
+    anchor: south;
+    x-offset: 0px;
+    y-offset: -16px;
+
+    width: 553px;
+    height: 74px;
+    border-radius: 18px;
+    background-color: @mac-bg-translucent;
+    border: 1px;
+    border-color: @mac-border;
+    padding: 6px 8px;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ listview ];
+    spacing: 8px;
+}
+
+listview {
+    layout: horizontal;
+    spacing: 4px;
+    lines: 9;
+    columns: 1;
+    fixed-height: true;
+    fixed-columns: true;
+    scrollbar: false;
+    border: 0px;
+}
+
+element {
+    padding: 2px 2px;
+    background-color: transparent;
+    border-radius: 10px;
+    children: [ element-icon ];
+    spacing: 10px;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: @mac-surface-hover;
+}
+
+element-icon {
+    background-color: transparent;
+    cursor: pointer;
+    size: 52px;
+}
+
+element-text {
+    enabled: false;
+}

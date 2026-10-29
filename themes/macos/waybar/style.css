@@ -1,0 +1,186 @@
+@import url("colors.css");
+
+* {
+    font-family: "SF Pro Text", "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    min-height: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+window#waybar {
+    background: @mac_bg_translucent;
+    color: @mac_text;
+    transition: all 0.3s ease;
+}
+
+#custom-arch,
+#workspaces,
+#group-hardware,
+#custom-gpu-icon,
+#custom-gpu-temp,
+#cpu,
+#memory,
+#temperature,
+#custom-settings,
+#tray,
+#bluetooth,
+#pulseaudio,
+#battery,
+#clock,
+#network {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: @mac_text;
+    padding: 0 9px;
+}
+
+#custom-arch {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 20px 0 14px;
+    color: @mac_text;
+    transition: opacity 0.2s ease;
+}
+
+#custom-arch:hover {
+    opacity: 0.7;
+}
+
+#workspaces {
+    padding: 0 4px;
+}
+
+#workspaces button {
+    background: transparent;
+    border: none;
+    color: @mac_icon_muted;
+    padding: 0 5px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.active {
+    color: @mac_accent;
+    opacity: 1;
+}
+
+#workspaces button:hover {
+    background: transparent;
+    color: @mac_icon_hover;
+}
+
+#group-hardware {
+    background: transparent;
+    border: none;
+    padding: 0 4px;
+    margin-left: 20px;
+}
+
+#cpu,
+#memory,
+#temperature,
+#custom-gpu-temp {
+    color: @mac_text;
+    padding: 0 8px;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    transition: opacity 0.2s ease;
+}
+
+#custom-gpu-icon,
+#custom-gpu-icon label {
+    font-size: 14px;
+    color: @mac_text;
+    padding: 0 3px 0 2px;
+    transition: opacity 0.2s ease;
+}
+
+#custom-gpu-temp {
+    font-size: 13px;
+    padding-top: 1px;
+    padding-left: 3px;
+    padding-right: 20px;
+}
+
+#custom-settings {
+    font-size: 15px;
+    padding: 0 8px;
+    transition: opacity 0.2s ease;
+}
+
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#custom-gpu-icon:hover,
+#custom-gpu-temp:hover,
+#custom-settings:hover {
+    opacity: 0.75;
+}
+
+#tray {
+    padding: 0 8px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#bluetooth,
+#pulseaudio,
+#battery {
+    color: @mac_text;
+    padding: 0 8px;
+    transition: opacity 0.2s ease;
+}
+
+#bluetooth:hover,
+#pulseaudio:hover,
+#battery:hover {
+    opacity: 0.75;
+}
+
+#battery.warning {
+    color: @mac_yellow;
+}
+
+#battery.critical {
+    color: @mac_red;
+}
+
+#clock {
+    font-size: 13px;
+    font-weight: 600;
+    color: @mac_text;
+    padding: 0 14px 0 10px;
+    letter-spacing: 0.2px;
+}
+
+#clock:hover {
+    opacity: 0.75;
+}
+
+tooltip {
+    background: @mac_tooltip_bg;
+    color: @mac_text;
+    border: 1px solid @mac_border;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
+    box-shadow: 0 10px 24px @mac_shadow;
+}
+
+tooltip label {
+    color: @mac_text;
+    font-size: 12px;
+}

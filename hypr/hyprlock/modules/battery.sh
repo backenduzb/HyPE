@@ -14,7 +14,6 @@ fi
 capacity="$(cat "$BAT_PATH/capacity")"
 status="$(cat "$BAT_PATH/status" 2>/dev/null || echo "")"
 
-# Capacity bo‘yicha icon
 if [ "$capacity" -ge 90 ]; then icon="󰁹"
 elif [ "$capacity" -ge 70 ]; then icon="󰂂"
 elif [ "$capacity" -ge 50 ]; then icon="󰂀"
@@ -23,7 +22,6 @@ elif [ "$capacity" -ge 15 ]; then icon="󰁼"
 else icon="󰁺"
 fi
 
-# Charging bo‘lsa maxsus icon
 if [ "$status" = "Charging" ]; then
   icon="󰂄"
 fi

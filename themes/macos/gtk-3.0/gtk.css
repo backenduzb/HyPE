@@ -1,0 +1,282 @@
+@import url("colors.css");
+
+* {
+    outline: none;
+}
+
+window,
+.background {
+    background-color: @mac_bg;
+    color: @mac_text;
+}
+
+headerbar {
+    min-height: 38px;
+    padding: 0 10px;
+    background-image: none;
+    background-color: @mac_surface;
+    border-bottom: 1px solid @mac_separator;
+    border-radius: 12px 12px 0 0;
+    box-shadow: none;
+}
+
+headerbar:backdrop {
+    background-color: @mac_bg;
+}
+
+headerbar .title {
+    color: @mac_text;
+    font-weight: 600;
+}
+
+headerbar button.titlebutton {
+    min-width: 13px;
+    min-height: 13px;
+    padding: 0;
+    margin: 0 4px;
+    border: none;
+    border-radius: 999px;
+    background-image: none;
+    box-shadow: none;
+    color: transparent;
+}
+
+headerbar button.titlebutton.close {
+    background-color: @mac_red;
+}
+
+headerbar button.titlebutton.minimize {
+    background-color: @mac_yellow;
+}
+
+headerbar button.titlebutton.maximize {
+    background-color: @mac_green;
+}
+
+menu,
+.menu,
+.context-menu,
+.csd menu,
+.csd .menu,
+.csd .context-menu,
+popover,
+popover.background {
+    background-color: @mac_bg_translucent;
+    background-image: none;
+    color: @mac_text;
+    border: 1px solid @mac_border;
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 14px 34px @mac_shadow;
+}
+
+menu menuitem,
+.menu menuitem,
+.context-menu menuitem,
+popover menuitem {
+    min-height: 26px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: @mac_text;
+}
+
+menu menuitem:hover,
+.menu menuitem:hover,
+.context-menu menuitem:hover,
+menu menuitem:selected,
+.menu menuitem:selected,
+.context-menu menuitem:selected,
+popover menuitem:hover,
+popover menuitem:selected {
+    background-color: @mac_surface_hover;
+    color: @mac_text;
+}
+
+menu menuitem:disabled,
+.menu menuitem:disabled,
+.context-menu menuitem:disabled,
+popover menuitem:disabled {
+    color: @mac_text_muted;
+}
+
+menu separator,
+.menu separator,
+.context-menu separator {
+    min-height: 1px;
+    margin: 6px 8px;
+    background-color: @mac_separator;
+}
+
+tooltip {
+    background-color: @mac_surface_alt;
+    border: 1px solid @mac_border;
+    border-radius: 8px;
+    box-shadow: 0 10px 24px @mac_shadow;
+}
+
+tooltip label {
+    color: @mac_text;
+    padding: 4px 6px;
+}
+
+button {
+    background-image: none;
+    background-color: @mac_surface_alt;
+    color: @mac_text;
+    border: 1px solid @mac_border;
+    border-radius: 9px;
+    padding: 6px 14px;
+    box-shadow: 0 1px 2px @mac_button_shadow;
+}
+
+button:hover {
+    background-color: @mac_surface_hover;
+}
+
+button:active,
+button:checked {
+    background-color: @mac_surface;
+}
+
+button:disabled {
+    background-color: @mac_control_disabled;
+    color: @mac_text_muted;
+}
+
+button.suggested-action,
+button.default {
+    background-color: @mac_accent;
+    border-color: transparent;
+    color: @mac_on_accent;
+}
+
+button.suggested-action:hover,
+button.default:hover {
+    background-color: @mac_accent_hover;
+}
+
+button.destructive-action {
+    background-color: @mac_red;
+    border-color: transparent;
+    color: @mac_text;
+}
+
+entry,
+spinbutton,
+searchbar entry {
+    background-color: @mac_entry_bg;
+    color: @mac_text;
+    border: 1px solid @mac_border;
+    border-radius: 9px;
+    padding: 6px 10px;
+    caret-color: @mac_accent;
+}
+
+entry:focus,
+spinbutton:focus {
+    border-color: @mac_accent;
+    box-shadow: 0 0 0 3px @mac_focus_ring;
+}
+
+entry selection {
+    background-color: @mac_accent;
+    color: @mac_on_accent;
+}
+
+.sidebar,
+.navigation-sidebar,
+list.sidebar {
+    background-color: @mac_sidebar;
+    border-right: 1px solid @mac_separator;
+}
+
+.view,
+treeview.view,
+list {
+    background-color: @mac_bg;
+    color: @mac_text;
+}
+
+.view:selected,
+treeview.view:selected,
+list row:selected {
+    background-color: @mac_accent;
+    color: @mac_on_accent;
+}
+
+notebook > header {
+    background-color: @mac_surface;
+    border-bottom: 1px solid @mac_separator;
+}
+
+notebook > header tab {
+    padding: 6px 12px;
+    border-radius: 7px;
+}
+
+notebook > header tab:checked {
+    background-color: @mac_surface_alt;
+}
+
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    min-width: 8px;
+    min-height: 8px;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-color: @mac_scrollbar;
+    background-clip: padding-box;
+}
+
+scrollbar slider:hover {
+    background-color: @mac_scrollbar_hover;
+}
+
+check,
+radio {
+    background-color: @mac_control_bg;
+    border: 1px solid @mac_border;
+}
+
+check:checked,
+radio:checked {
+    background-color: @mac_accent;
+    border-color: @mac_accent;
+    color: @mac_on_accent;
+}
+
+switch {
+    background-color: @mac_switch_bg;
+    border-radius: 999px;
+}
+
+switch:checked {
+    background-color: @mac_accent;
+}
+
+switch slider {
+    background-color: @mac_on_accent;
+    border-radius: 999px;
+}
+
+progressbar trough {
+    background-color: @mac_progress_bg;
+    border-radius: 999px;
+}
+
+progressbar progress {
+    background-color: @mac_accent;
+    border-radius: 999px;
+}
+
+levelbar block.filled {
+    background-color: @mac_accent;
+    border-radius: 999px;
+}
+
+separator {
+    background-color: @mac_separator;
+}

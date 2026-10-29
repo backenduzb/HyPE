@@ -8,13 +8,20 @@
 
     "modules-center": ["group/hardware"],
 
-    "modules-right": ["tray", "bluetooth", "pulseaudio", "battery", "clock"],
+    "modules-right": ["custom/settings", "tray", "bluetooth", "pulseaudio", "battery", "clock"],
 
     "custom/arch": {
         "format": "󰣇",
         "tooltip": true,
         "tooltip-format": "Power Menu",
         "on-click": "pkill wlogout || wlogout -b 3 -l ${HYCON_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}}/wlogout/layout -C ${HYCON_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}}/wlogout/style.css",
+        "cursor": true
+    },
+
+    "custom/settings": {
+        "format": "󰒓",
+        "tooltip": false,
+        "on-click": "${HYCON_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}}/waybar/scripts/settings-menu.py",
         "cursor": true
     },
 
