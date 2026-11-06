@@ -22,11 +22,13 @@ window#waybar {
 #group-hardware,
 #custom-gpu-icon,
 #custom-gpu-temp,
+#custom-power-safe,
 #cpu,
 #memory,
 #temperature,
+#custom-settings,
 #tray,
-#bluetooth,
+#backlight,
 #pulseaudio,
 #battery,
 #clock,
@@ -52,6 +54,7 @@ window#waybar {
 
 #workspaces {
     padding: 0 4px;
+    margin-left: 12px;
 }
 
 #workspaces button {
@@ -107,11 +110,19 @@ window#waybar {
     padding-right: 20px;
 }
 
+#custom-settings {
+    font-size: 16px;
+    padding: 0 8px;
+    min-width: 22px;
+    transition: opacity 0.2s ease;
+}
+
 #cpu:hover,
 #memory:hover,
 #temperature:hover,
 #custom-gpu-icon:hover,
-#custom-gpu-temp:hover {
+#custom-gpu-temp:hover,
+#custom-settings:hover {
     opacity: 0.75;
 }
 
@@ -127,7 +138,8 @@ window#waybar {
     -gtk-icon-effect: highlight;
 }
 
-#bluetooth,
+#custom-power-safe,
+#backlight,
 #pulseaudio,
 #battery {
     color: #ffffff;
@@ -135,10 +147,23 @@ window#waybar {
     transition: opacity 0.2s ease;
 }
 
-#bluetooth:hover,
+#custom-power-safe:hover,
+#backlight:hover,
 #pulseaudio:hover,
 #battery:hover {
     opacity: 0.75;
+}
+
+#custom-power-safe.on {
+    color: #32d74b;
+}
+
+#custom-power-safe.warning {
+    color: #ffd60a;
+}
+
+#custom-power-safe.off {
+    color: #ffffff;
 }
 
 #battery.warning {

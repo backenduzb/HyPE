@@ -34,6 +34,7 @@ Options:
       --with-sddm          SDDM victhem mavzusini o'rnatish (sudo)
       --with-grub          Hycon GRUB mavzusini o'rnatish (sudo, grub-mkconfig)
       --with-system-themes SDDM va GRUB mavzularini o'rnatish (sudo)
+      --with-tlp           TLP power profilini o'rnatish (sudo)
   -h, --help    Ushbu yordamni ko'rsatish
 
 Backup:
@@ -62,8 +63,10 @@ ASSUME_YES=0
 FORCE=0
 WITH_SDDM=0
 WITH_GRUB=0
+WITH_TLP=0
 SDDM_INSTALLED=0
 GRUB_INSTALLED=0
+TLP_INSTALLED=0
 TMP_LOG=""
 declare -A BACKED_UP_PATHS=()
 
@@ -74,6 +77,7 @@ while (( $# > 0 )); do
         --with-sddm) WITH_SDDM=1 ;;
         --with-grub) WITH_GRUB=1 ;;
         --with-system-themes) WITH_SDDM=1; WITH_GRUB=1 ;;
+        --with-tlp) WITH_TLP=1 ;;
         -h|--help) usage; exit 0 ;;
         *) log_error "Noma'lum argument: $1"; usage; exit 2 ;;
     esac
@@ -98,7 +102,7 @@ TARGET="${TARGET%/}"
 [[ "$PROJECT_DIR" != "$TARGET" ]] || die "Loyiha papkasi bilan target bir xil: $TARGET"
 (( EUID != 0 )) || die "install.sh ni root sifatida ishga tushirmang"
 
-MANAGED_DIRS=(hypr waybar kitty rofi dunst hypridle wlogout themes assets)
+MANAGED_DIRS=(hypr waybar kitty rofi dunst hypridle wlogout themes assets scripts)
 THEME_TARGET_FILES=(
     gtk-3.0/settings.ini
     gtk-3.0/gtk.css
@@ -151,9 +155,12 @@ PROJECT_REQUIRED_FILES=(
     hypr/hyprlock/modules/spoticover.sh
     waybar/config.jsonc
     waybar/style.css
+    waybar/power-safe.conf
     waybar/menu/settings.xml
     waybar/scripts/gpu.sh
+    waybar/scripts/power-safe.sh
     waybar/scripts/settings-menu.py
+    scripts/tessaract.sh
     kitty/kitty.conf
     rofi/scripts/toggle.sh
     rofi/scripts/dock-window.sh
@@ -209,6 +216,7 @@ PROJECT_REQUIRED_FILES=(
     assets/grub/hycon/terminal_c.png
     assets/grub/hycon/slider_c.png
     assets/grub/hycon/icons/arch.png
+    tlp/99-hycon-power.conf
 )
 
 REQUIRED_COMMANDS=(
@@ -227,6 +235,7 @@ REQUIRED_COMMANDS=(
     slurp
     wl-copy
     brightnessctl
+    cpupower
     wpctl
     playerctl
     hyprlock
@@ -235,8 +244,12 @@ REQUIRED_COMMANDS=(
 
 OPTIONAL_COMMANDS=(
     hypridle
+    tlp
+    tlp-stat
     awww
     swww
+    hyprpolkitagent
+    nm-applet
     pamixer
     notify-send
     gsettings
@@ -410,6 +423,10 @@ confirm_install() {
         printf '  - %s (system)\n' "$GRUB_THEME_DIR"
         printf '  - %s (system)\n' "$GRUB_DEFAULT"
         printf '  - %s (system)\n' "$GRUB_CFG"
+    fi
+    if (( WITH_TLP == 1 )); then
+        printf '  - %s (system)\n' "/etc/tlp.d/99-hycon-power.conf"
+        printf '  - %s (system, eski overridelar comment qilinadi)\n' "/etc/tlp.conf"
     fi
     echo
     log_info "Backup: $BACKUP_DIR"
@@ -722,6 +739,51 @@ install_grub_theme() {
     log_info "Qaytarish: sudo cp $default_backup $grub_default && sudo grub-mkconfig -o $grub_cfg"
 }
 
+install_tlp_config() {
+    if (( WITH_TLP == 0 )); then
+        log_info "TLP power profili o'tkazib yuborildi. Qo'shish: $0 --with-tlp"
+        return 0
+    fi
+    if ! command -v tlp >/dev/null 2>&1; then
+        log_warn "TLP topilmadi; TLP power profili o'tkazib yuborildi."
+        return 0
+    fi
+    if ! command -v sudo >/dev/null 2>&1; then
+        log_warn "sudo topilmadi; TLP power profili o'tkazib yuborildi."
+        return 0
+    fi
+
+    log_step "TLP power profili o'rnatilmoqda"
+    local src="$PROJECT_DIR/tlp/99-hycon-power.conf"
+    local dest="/etc/tlp.d/99-hycon-power.conf"
+    local tlp_conf="/etc/tlp.conf"
+    local tmp
+    [[ -f "$src" ]] || die "TLP config topilmadi: $src"
+
+    backup_system_copy "$dest" || die "TLP drop-in backup qilinmadi; to'xtatildi."
+    backup_system_copy "$tlp_conf" || die "TLP config backup qilinmadi; to'xtatildi."
+
+    sudo install -Dm644 -o root -g root -- "$src" "$dest"
+
+    # /etc/tlp.conf is read after /etc/tlp.d, so neutralise old manual
+    # overrides that would otherwise keep the NVIDIA GPU powered on battery.
+    tmp="$(mktemp "${TMPDIR:-/tmp}/hycon-tlp.XXXXXX")"
+    cp -- "$tlp_conf" "$tmp"
+    sed -E -i \
+        's/^(TLP_ENABLE|CPU_SCALING_GOVERNOR_ON_AC|CPU_SCALING_GOVERNOR_ON_BAT|CPU_ENERGY_PERF_POLICY_ON_AC|CPU_ENERGY_PERF_POLICY_ON_BAT|CPU_BOOST_ON_AC|CPU_BOOST_ON_BAT|CPU_HWP_DYN_BOOST_ON_AC|CPU_HWP_DYN_BOOST_ON_BAT|PLATFORM_PROFILE_ON_AC|PLATFORM_PROFILE_ON_BAT|RUNTIME_PM_ON_AC|RUNTIME_PM_ON_BAT|RUNTIME_PM_DENYLIST|RUNTIME_PM_DRIVER_DENYLIST|RUNTIME_PM_BLACKLIST|RUNTIME_PM_DRIVER_BLACKLIST|PCI_DEVICES|USB_AUTOSUSPEND|DISK_APM_LEVEL_ON_AC|DISK_APM_LEVEL_ON_BAT)=/# &/' \
+        "$tmp"
+    sudo install -m 644 -o root -g root -- "$tmp" "$tlp_conf"
+    rm -f "$tmp"
+
+    if command -v systemctl >/dev/null 2>&1; then
+        sudo systemctl restart tlp \
+            || log_warn "TLP restart qilinmadi. Qo'lda: sudo systemctl restart tlp"
+    fi
+    TLP_INSTALLED=1
+    log_success "TLP power profili o'rnatildi: $dest"
+    log_info "Tekshirish: sudo tlp-stat -s && sudo tlp-stat -p"
+}
+
 install_system_themes() {
     if (( WITH_SDDM == 0 && WITH_GRUB == 0 )); then
         log_info "Tizim mavzulari o'tkazib yuborildi. Qo'shish: $0 --with-sddm --with-grub"
@@ -736,6 +798,33 @@ install_system_themes() {
     if (( WITH_GRUB == 1 )); then
         install_grub_theme || die "GRUB mavzusi o'rnatilmadi; /boot/grub/grub.cfg o'zgartirilmadi."
     fi
+}
+
+check_hypr_lua_modules() {
+    local hypr_config="$1"
+    local target="$2"
+    local missing=0 rel
+    local required=(
+        hypr/theme/theme.lua
+        hypr/configs.lua
+        hypr/modules/animations.lua
+        hypr/modules/keybinds.lua
+        hypr/modules/autostart.lua
+        themes/macos/hypr.lua
+        themes/macos/colors.lua
+    )
+
+    if ! grep -q 'package.path = configHome' "$hypr_config"; then
+        log_error "hyprland.lua HYCON_DIR package.path sozlamasini o'z ichiga olmaydi."
+        missing=1
+    fi
+    for rel in "${required[@]}"; do
+        if [[ ! -f "$target/$rel" ]]; then
+            log_error "Lua moduli topilmadi: $target/$rel"
+            missing=1
+        fi
+    done
+    (( missing == 0 ))
 }
 
 validate_install() {
@@ -760,6 +849,11 @@ validate_install() {
         cat "$log_file" >&2
         exit 1
     fi
+
+    if ! check_hypr_lua_modules "$hypr_config" "$TARGET"; then
+        die "Hyprland Lua modullari to'liq emas; config ishlamaydi."
+    fi
+    log_success "Hyprland Lua modullari topildi"
 
     if command -v rofi >/dev/null 2>&1; then
         local theme
@@ -787,9 +881,13 @@ print_summary() {
     if (( GRUB_INSTALLED == 1 )); then
         echo -e "${DIM}GRUB:${RESET}     hycon ($GRUB_THEME_DIR)"
     fi
+    if (( TLP_INSTALLED == 1 )); then
+        echo -e "${DIM}TLP:${RESET}      99-hycon-power.conf (/etc/tlp.d)"
+    fi
     echo
     log_warn "Yangi config faollashishi uchun sessiyadan chiqib, qayta kiring."
     log_info "Dark/light almashtirish: $TARGET/themes/macos/switch.sh light"
+    log_info "Power Safe: Waybar'dagi leaf/speedometer ikonkasini bosing"
     log_info "Nested test: $PROJECT_DIR/runner.sh verify"
     if (( GRUB_INSTALLED == 1 )); then
         log_info "GRUB rollback: sudo cp ${GRUB_DEFAULT_BACKUP:-$BACKUP_DIR/system/etc/default/grub} $GRUB_DEFAULT && sudo grub-mkconfig -o $GRUB_CFG"
@@ -815,4 +913,5 @@ apply_theme
 configure_uwsm_env
 validate_install
 install_system_themes
+install_tlp_config
 print_summary

@@ -73,13 +73,59 @@ def get_clients():
         })
     return valid
 
-def print_list():
+def print_list(address_file=None):
     _, launcher_icon, _ = get_launcher_info()
-    sys.stdout.write(f"Arch\0icon\x1f{launcher_icon}\n")
+    clients = get_clients()
+    address_handle = None
 
-    for c in get_clients():
-        sys.stdout.write(f"{c['title']}\0icon\x1f{c['icon']}\n")
-    sys.stdout.flush()
+    if address_file:
+        try:
+            address_handle = open(address_file, "w", encoding="utf-8")
+        except OSError:
+            address_handle = None
+
+    try:
+        sys.stdout.write(f"Arch\0icon\x1f{launcher_icon}\n")
+        if address_handle:
+            address_handle.write("\n")
+
+        for c in clients:
+            sys.stdout.write(f"{c['title']}\0icon\x1f{c['icon']}\n")
+            if address_handle:
+                address_handle.write(f"{c['address']}\n")
+        sys.stdout.flush()
+    finally:
+        if address_handle:
+            address_handle.close()
+
+def focus_client(address):
+    if not address:
+        return False
+
+    lua = f"hl.dsp.focus({{ window = hl.get_window('address:{address}') }})"
+    try:
+        result = subprocess.run(
+            ["hyprctl", "dispatch", lua],
+            capture_output=True,
+            text=True,
+            timeout=2,
+        )
+        if result.returncode == 0:
+            return True
+    except Exception:
+        pass
+
+    try:
+        result = subprocess.run(
+            ["hyprctl", "dispatch", "focuswindow", f"address:{address}"],
+            capture_output=True,
+            text=True,
+            timeout=2,
+        )
+        return result.returncode == 0
+    except Exception:
+        return False
+
 
 def select_item(index_str):
     try:
@@ -94,8 +140,7 @@ def select_item(index_str):
         clients = get_clients()
         client_idx = idx - 1
         if 0 <= client_idx < len(clients):
-            addr = clients[client_idx]["address"]
-            subprocess.run(["hyprctl", "dispatch", "focuswindow", f"address:{addr}"])
+            focus_client(clients[client_idx]["address"])
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -103,7 +148,9 @@ if __name__ == "__main__":
         if arg == "--count":
             print(len(get_clients()) + 1)
         elif arg == "--list":
-            print_list()
+            print_list(sys.argv[2] if len(sys.argv) > 2 else None)
+        elif arg == "--focus" and len(sys.argv) > 2:
+            focus_client(sys.argv[2])
         elif arg == "--select" and len(sys.argv) > 2:
             select_item(sys.argv[2])
     else:

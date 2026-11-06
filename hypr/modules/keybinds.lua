@@ -16,12 +16,63 @@ hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 
-hl.bind(mainMod .. " + W",hl.dsp.exec_cmd("bash -c 'current=$(hyprctl monitors -j | jq \".[0].scale\"); if [ $(echo \"$current == 1.0\" | bc) -eq 1 ]; then hyprctl keyword monitor eDP-1, 1.25, auto, 1.25; else hyprctl keyword monitor eDP-1, 1.0, auto, 1.0; fi'"))
+
+hl.bind(
+    "SUPER + mouse:272",
+    hl.dsp.window.drag(),
+    { mouse = true }
+)
+hl.bind(
+    "SUPER + mouse:273",
+    hl.dsp.window.resize(),
+    { mouse = true }
+)
+
+hl.gesture({
+    fingers = 3,
+    direction = "horizontal",
+    action = "workspace",
+})
+
+hl.gesture({
+    fingers = 3,
+    direction = "vertical",
+    action = {
+        start = function(e)
+            if e.delta.y ~= 0 then
+                local change = -0.25 * e.delta.y
+                local sign = change < 0 and "-" or "+"
+                hl.exec_cmd(
+                    "wpctl set-volume @DEFAULT_AUDIO_SINK@ " ..
+                    math.abs(change) .. "%" .. sign
+                )
+            end
+        end,
+        update = function(e)
+            if e.delta.y ~= 0 then
+                local change = -0.25 * e.delta.y
+                local sign = change < 0 and "-" or "+"
+                hl.exec_cmd(
+                    "wpctl set-volume @DEFAULT_AUDIO_SINK@ " ..
+                    math.abs(change) .. "%" .. sign
+                )
+            end
+        end,
+    },
+})
+
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("$HOME/.config/scripts/tessaract.sh"))
+
+hl.bind(mainMod .. " + W", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen(0))
+
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("hyprshot -m region"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region -z"))
 hl.bind("ALT + Q", hl.dsp.window.close())
 
-hl.bind("CTRL + " .. mainMod .. " + ALT + Left", hl.dsp.window.move({ direction = "left" }))
-hl.bind("CTRL + " .. mainMod .. " + ALT + Right", hl.dsp.window.move({ direction = "right" }))
+hl.bind("CTRL + SUPER + ALT + Right", hl.dsp.window.move({ workspace = "+1" }))
+
+hl.bind("CTRL + SUPER + ALT + Left", hl.dsp.window.move({ workspace = "-1" }))
 
 for i = 1, 9 do
     local key = tostring(i)

@@ -32,6 +32,29 @@
             </item>
         </submenu>
         <submenu>
+            <attribute name="label">Power Safe</attribute>
+            <item>
+                <attribute name="label">Enabled</attribute>
+                <attribute name="action">power.on</attribute>
+            </item>
+            <item>
+                <attribute name="label">Disabled</attribute>
+                <attribute name="action">power.off</attribute>
+            </item>
+            <item>
+                <attribute name="label">Toggle</attribute>
+                <attribute name="action">power.toggle</attribute>
+            </item>
+            <item>
+                <attribute name="label">Status</attribute>
+                <attribute name="action">power.status</attribute>
+            </item>
+            <item>
+                <attribute name="label">Reset</attribute>
+                <attribute name="action">power.reset</attribute>
+            </item>
+        </submenu>
+        <submenu>
             <attribute name="label">Theme</attribute>
             <item>
                 <attribute name="label">macOS Dark</attribute>

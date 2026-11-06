@@ -29,14 +29,15 @@ DOCK_ELEMENT_PADDING=4
 DOCK_LIST_SPACING=4
 DOCK_WINDOW_PADDING=16
 DOCK_WINDOW_BORDER=2
-DOCK_WIDTH_BUFFER=12
+DOCK_WIDTH_BUFFER=1
 
 MODE="${1:-toggle}"
 
 launch_dock() {
-    local list_file total width selected_idx
+    local list_file addr_file total width selected_idx addr
     list_file="$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/hycon-dock.XXXXXX")" || return 1
-    "$DOCK_WINDOW" --list > "$list_file" 2>/dev/null
+    addr_file="$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/hycon-dock-addr.XXXXXX")" || { rm -f "$list_file"; return 1; }
+    "$DOCK_WINDOW" --list "$addr_file" > "$list_file" 2>/dev/null
 
     total="$(awk 'END { print NR }' "$list_file" 2>/dev/null || true)"
     if [[ -z "$total" || "$total" -lt 1 ]]; then
@@ -59,8 +60,18 @@ launch_dock() {
     rm -f "$list_file"
 
     if [[ -n "$selected_idx" ]]; then
-        "$DOCK_WINDOW" --select "$selected_idx"
+        if [[ "$selected_idx" == "0" ]]; then
+            "$DOCK_WINDOW" --select 0
+        else
+            addr="$(sed -n "$((selected_idx + 1))p" "$addr_file" 2>/dev/null || true)"
+            if [[ -n "$addr" ]]; then
+                "$DOCK_WINDOW" --focus "$addr"
+            else
+                "$DOCK_WINDOW" --select "$selected_idx"
+            fi
+        fi
     fi
+    rm -f "$addr_file"
 }
 
 if [ "$MODE" = "full" ]; then

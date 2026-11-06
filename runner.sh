@@ -72,6 +72,23 @@ verify_config() {
         "HYCON_NESTED=1" \
         "XDG_CONFIG_HOME=$PROJECT_DIR" \
         Hyprland --config "$CONFIG_FILE" --verify-config; then
+        local rel missing=0
+        if ! grep -q 'package.path = configHome' "$CONFIG_FILE"; then
+            log_error "hyprland.lua HYCON_DIR package.path sozlamasini o'z ichiga olmaydi."
+            missing=1
+        fi
+        for rel in hypr/theme/theme.lua hypr/configs.lua \
+            hypr/modules/animations.lua hypr/modules/keybinds.lua \
+            hypr/modules/autostart.lua themes/macos/hypr.lua \
+            themes/macos/colors.lua; do
+            [[ -f "$PROJECT_DIR/$rel" ]] || {
+                log_error "Lua moduli topilmadi: $PROJECT_DIR/$rel"
+                missing=1
+            }
+        done
+        if (( missing != 0 )); then
+            exit 1
+        fi
         echo -e "${DIM}--------------------------------------------------${RESET}"
         log_success "Config sintaksisi to'g'ri! Hech qanday xatolik topilmadi."
     else

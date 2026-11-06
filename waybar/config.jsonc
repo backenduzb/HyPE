@@ -4,11 +4,11 @@
     "height": 30,
     "spacing": 0,
 
-    "modules-left": ["custom/arch", "hyprland/workspaces"],
+    "modules-left": ["custom/arch", "custom/settings", "hyprland/workspaces"],
 
     "modules-center": ["group/hardware"],
 
-    "modules-right": ["custom/settings", "tray", "bluetooth", "pulseaudio", "battery", "clock"],
+    "modules-right": ["tray", "backlight", "pulseaudio", "custom/power-safe", "battery", "clock"],
 
     "custom/arch": {
         "format": "󰣇",
@@ -91,13 +91,11 @@
         "spacing": 10,
     },
 
-    "bluetooth": {
-        "format": "󰂯",
-        "format-disabled": "󰂲",
-        "format-connected": "󰂱 {device_alias}",
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\nConnected devices:\n{device_enumerate}",
-        "on-click": "blueman-manager",
+    "backlight": {
+        "format": "{icon}  {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "interval": 1,
+        "tooltip-format": "Brightness: {percent}%",
     },
 
     "pulseaudio": {
@@ -108,6 +106,18 @@
         },
         "tooltip-format": "Volume: {volume}%",
         "on-click": "pavucontrol",
+    },
+
+    // Power Safe: TLP + cpupower CPU limit (settings in waybar/power-safe.conf)
+    "custom/power-safe": {
+        "exec": "$HOME/.config/waybar/scripts/power-safe.sh status",
+        "return-type": "json",
+        "interval": 10,
+        "signal": 9,
+        "tooltip": true,
+        "cursor": true,
+        "on-click": "$HOME/.config/waybar/scripts/power-safe.sh toggle",
+        "on-click-right": "$HOME/.config/waybar/scripts/power-safe.sh details",
     },
 
     "battery": {

@@ -1,13 +1,19 @@
+@import "colors.rasi"
+@import "icon-theme.rasi"
+
 configuration {
     show-icons: true;
-    icon-theme: "WhiteSur-dark";
     disable-history: false;
     sorting-method: "fzf";
+
+    kb-remove-to-eol: "";
+    kb-element-next: "";
+    kb-element-prev: "";
 }
 
 * {
     background-color: transparent;
-    text-color: #f5f5f5;
+    text-color: @mac-text;
     normal-background: transparent;
     alternate-normal-background: transparent;
 }
@@ -19,11 +25,12 @@ window {
     y-offset: -16px;
 
     width: 553px;
-    height: 70px;
+    height: 74px;
     border-radius: 18px;
-    background-color: #1e1e20b8;
+    background-color: @mac-bg-translucent;
     border: 1px;
-    border-color: #ffffff14;
+    border-color: @mac-border;
+    padding: 6px 8px;
 }
 
 mainbox {
@@ -58,7 +65,7 @@ element alternate.normal {
 
 element selected.normal,
 element selected.active {
-    background-color: #acacac90;
+    background-color: @mac-surface-hover;
 }
 
 element-icon {

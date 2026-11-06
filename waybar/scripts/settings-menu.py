@@ -25,6 +25,10 @@ ICONS = {
     "Theme": "preferences-desktop-theme",
     "macOS Dark": "weather-clear-night",
     "macOS Light": "weather-clear",
+    "Power Safe": "battery-good-symbolic",
+    "Toggle": "media-playlist-repeat",
+    "Status": "dialog-information",
+    "Reset": "edit-undo",
 }
 
 
@@ -264,16 +268,27 @@ def execute(action, label):
             notify("Theme", f"macOS {name.capitalize()} applied")
         return
 
+    if action.startswith("power."):
+        script = config_dir() / "waybar" / "scripts" / "power-safe.sh"
+        command = action.split(".", 1)[1]
+        if command == "status":
+            command = "details"
+        if script.exists():
+            subprocess.run([str(script), command], check=False)
+        return
+
     if action == "animations.enable":
         subprocess.run(
-            ["hyprctl", "keyword", "animations:enabled", "true"], check=False
+            ["hyprctl", "eval", "hl.config({ animations = { enabled = true } })"],
+            check=False,
         )
         notify("Animations", "Enabled")
         return
 
     if action == "animations.disable":
         subprocess.run(
-            ["hyprctl", "keyword", "animations:enabled", "false"], check=False
+            ["hyprctl", "eval", "hl.config({ animations = { enabled = false } })"],
+            check=False,
         )
         notify("Animations", "Disabled")
         return

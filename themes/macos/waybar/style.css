@@ -24,12 +24,13 @@ window#waybar {
 #group-hardware,
 #custom-gpu-icon,
 #custom-gpu-temp,
+#custom-power-safe,
 #cpu,
 #memory,
 #temperature,
 #custom-settings,
 #tray,
-#bluetooth,
+#backlight,
 #pulseaudio,
 #battery,
 #clock,
@@ -55,6 +56,7 @@ window#waybar {
 
 #workspaces {
     padding: 0 4px;
+    margin-left: 12px;
 }
 
 #workspaces button {
@@ -110,8 +112,9 @@ window#waybar {
 }
 
 #custom-settings {
-    font-size: 15px;
+    font-size: 16px;
     padding: 0 8px;
+    min-width: 22px;
     transition: opacity 0.2s ease;
 }
 
@@ -136,7 +139,8 @@ window#waybar {
     -gtk-icon-effect: highlight;
 }
 
-#bluetooth,
+#custom-power-safe,
+#backlight,
 #pulseaudio,
 #battery {
     color: @mac_text;
@@ -144,10 +148,23 @@ window#waybar {
     transition: opacity 0.2s ease;
 }
 
-#bluetooth:hover,
+#custom-power-safe:hover,
+#backlight:hover,
 #pulseaudio:hover,
 #battery:hover {
     opacity: 0.75;
+}
+
+#custom-power-safe.on {
+    color: #32d74b;
+}
+
+#custom-power-safe.warning {
+    color: #ffd60a;
+}
+
+#custom-power-safe.off {
+    color: @mac_text;
 }
 
 #battery.warning {
