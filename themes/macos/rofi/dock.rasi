@@ -22,7 +22,7 @@ window {
     location: south;
     anchor: south;
     x-offset: 0px;
-    y-offset: -16px;
+    y-offset: 16px;
 
     width: 553px;
     height: 74px;

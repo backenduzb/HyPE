@@ -159,6 +159,7 @@ PROJECT_REQUIRED_FILES=(
     waybar/menu/settings.xml
     waybar/scripts/gpu.sh
     waybar/scripts/power-safe.sh
+    waybar/scripts/askpass.sh
     waybar/scripts/settings-menu.py
     scripts/tessaract.sh
     kitty/kitty.conf
@@ -188,6 +189,7 @@ PROJECT_REQUIRED_FILES=(
     themes/macos/rofi/dock.rasi
     themes/macos/rofi/icon-theme.rasi
     themes/macos/rofi/wallpaper.rasi
+    themes/macos/rofi/wallpaper.jpg
     themes/macos/gtk-3.0/gtk.css
     themes/macos/gtk-3.0/settings.ini
     themes/macos/gtk-4.0/gtk.css
@@ -575,7 +577,74 @@ apply_theme() {
     local apply_script="$TARGET/themes/macos/apply.sh"
     [[ -x "$apply_script" ]] || die "Theme apply skripti topilmadi: $apply_script"
     HYCON_DIR="$TARGET" "$apply_script" "$TARGET"
+    cleanup_theme_backups
     log_success "Mavzu qo'llanildi"
+}
+
+cleanup_theme_backups() {
+    local backup
+    while IFS= read -r -d '' backup; do
+        rm -f -- "$backup"
+        log_info "Eski theme backup o'chirildi: $backup"
+    done < <(find "$TARGET" -maxdepth 4 -name '*.macos.bak' -print0 2>/dev/null)
+}
+
+validate_theme_links() {
+    log_step "Mavzu symlinklari tekshirilmoqda"
+
+    local rel dst src
+    local -a linked_files=(
+        gtk-3.0/settings.ini
+        gtk-3.0/gtk.css
+        gtk-3.0/colors.css
+        gtk-4.0/settings.ini
+        gtk-4.0/gtk.css
+        gtk-4.0/colors.css
+        qt5ct/colors.conf
+        qt6ct/colors.conf
+        rofi/macos.rasi
+        rofi/colors.rasi
+        rofi/icon-theme.rasi
+        rofi/banner.rasi
+        rofi/dock.rasi
+        rofi/menu.rasi
+        rofi/picker.rasi
+        rofi/emoji.rasi
+        rofi/wallpaper.rasi
+    )
+
+    for rel in "${linked_files[@]}"; do
+        dst="$TARGET/$rel"
+        src="$TARGET/themes/macos/$rel"
+        [[ -L "$dst" ]] || die "Symlink kutilgan, lekin topilmadi: $dst"
+        [[ -e "$dst" ]] || die "Symlink sindirilgan: $dst -> $(readlink "$dst" 2>/dev/null || true)"
+        if [[ -e "$src" ]] && [[ "$(readlink -f "$dst")" != "$(readlink -f "$src")" ]]; then
+            die "Symlink noto'g'ri manzilga: $dst -> $(readlink "$dst" 2>/dev/null || true)"
+        fi
+    done
+
+    for rel in qt5ct/qt5ct.conf qt6ct/qt6ct.conf; do
+        [[ -f "$TARGET/$rel" ]] || die "Render qilingan fayl topilmadi: $TARGET/$rel"
+    done
+
+    [[ -L "$TARGET/Kvantum/kvantum.kvconfig" ]] \
+        || die "Kvantum symlink topilmadi: $TARGET/Kvantum/kvantum.kvconfig"
+    for rel in Kvantum/MacOS/MacOS.kvconfig Kvantum/MacOS/MacOS.svg; do
+        [[ -e "$TARGET/$rel" || -L "$TARGET/$rel" ]] \
+            || die "Kvantum fayli topilmadi: $TARGET/$rel"
+    done
+
+    local banner="$TARGET/themes/macos/rofi/banner.rasi"
+    local wallpaper="$TARGET/themes/macos/rofi/wallpaper.jpg"
+    [[ -f "$banner" ]] || die "Rofi banner topilmadi: $banner"
+    if [[ -e "$wallpaper" ]]; then
+        grep -Fq "url(\"$wallpaper\"" "$banner" \
+            || die "Rofi banner wallpaper manzili noto'g'ri: $banner"
+    else
+        log_warn "Rofi wallpaper target topilmadi: $wallpaper"
+    fi
+
+    log_success "Mavzu symlinklari to'g'ri"
 }
 
 configure_uwsm_env() {
@@ -854,6 +923,8 @@ validate_install() {
         die "Hyprland Lua modullari to'liq emas; config ishlamaydi."
     fi
     log_success "Hyprland Lua modullari topildi"
+
+    validate_theme_links
 
     if command -v rofi >/dev/null 2>&1; then
         local theme

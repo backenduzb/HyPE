@@ -14,7 +14,7 @@ headerbar {
     min-height: 38px;
     padding: 0 10px;
     background-image: none;
-    background-color: @mac_surface;
+    background-color: transparent;
     border-bottom: 1px solid @mac_separator;
     border-radius: 12px 12px 0 0;
     box-shadow: none;
@@ -35,7 +35,7 @@ headerbar button.titlebutton {
     padding: 0;
     margin: 0 4px;
     border: none;
-    border-radius: 999px;
+    border-radius: 8px;
     background-image: none;
     box-shadow: none;
     color: transparent;
